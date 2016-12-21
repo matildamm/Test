@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Attributes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Profiles" Relationship="Self.Profiles_Attributes" FromRole="Attributes" ToRole="Profiles" />
+  </EntityType>
+  <EntityType Name="FriendCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Friends_With" Relationship="Self.FK_FriendsWith_FriendCategory" FromRole="FriendCategory" ToRole="Friends_With" />
+  </EntityType>
+  <EntityType Name="Friends_With">
+    <Key>
+      <PropertyRef Name="Host" />
+      <PropertyRef Name="Friend" />
+    </Key>
+    <Property Name="Host" Type="Int32" Nullable="false" />
+    <Property Name="Friend" Type="Int32" Nullable="false" />
+    <Property Name="FriendCategory" Type="Int32" />
+    <NavigationProperty Name="FriendCategory1" Relationship="Self.FK_FriendsWith_FriendCategory" FromRole="Friends_With" ToRole="FriendCategory" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_FriendsWith_UsersF" FromRole="Friends_With" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="Self.FK_FriendsWith_UsersH" FromRole="Friends_With" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Userprofile" Type="Int32" />
+    <Property Name="Content" Type="String" MaxLength="600" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Author" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Posts__Author__2B3F6F97" FromRole="Posts" ToRole="Users" />
+    <NavigationProperty Name="Profiles" Relationship="Self.FK__Posts__Userprofi__2A4B4B5E" FromRole="Posts" ToRole="Profiles" />
+  </EntityType>
+  <EntityType Name="Profiles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descriptions" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ålder" Type="Int32" Nullable="false" />
+    <Property Name="Längd" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK__Posts__Userprofi__2A4B4B5E" FromRole="Profiles" ToRole="Posts" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__Profil__276EDEB3" FromRole="Profiles" ToRole="Users" />
+    <NavigationProperty Name="Visitors" Relationship="Self.FK_Visitors_Profiles" FromRole="Profiles" ToRole="Visitors" />
+    <NavigationProperty Name="Attributes" Relationship="Self.Profiles_Attributes" FromRole="Profiles" ToRole="Attributes" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Visible" Type="Boolean" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Profil" Type="Int32" />
+    <NavigationProperty Name="Friends_With" Relationship="Self.FK_FriendsWith_UsersF" FromRole="Users" ToRole="Friends_With" />
+    <NavigationProperty Name="Friends_With1" Relationship="Self.FK_FriendsWith_UsersH" FromRole="Users" ToRole="Friends_With" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK__Posts__Author__2B3F6F97" FromRole="Users" ToRole="Posts" />
+    <NavigationProperty Name="Profiles" Relationship="Self.FK__Users__Profil__276EDEB3" FromRole="Users" ToRole="Profiles" />
+    <NavigationProperty Name="Visitors" Relationship="Self.FK_Visitors_Users" FromRole="Users" ToRole="Visitors" />
+  </EntityType>
+  <EntityType Name="Visitors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Host" Type="Int32" />
+    <Property Name="Visitor" Type="Int32" />
+    <NavigationProperty Name="Profiles" Relationship="Self.FK_Visitors_Profiles" FromRole="Visitors" ToRole="Profiles" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Visitors_Users" FromRole="Visitors" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_FriendsWith_FriendCategory">
+    <End Role="FriendCategory" Type="Self.FriendCategory" Multiplicity="0..1" />
+    <End Role="Friends_With" Type="Self.Friends_With" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FriendCategory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Friends_With">
+        <PropertyRef Name="FriendCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FriendsWith_UsersF">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Friends_With" Type="Self.Friends_With" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Friends_With">
+        <PropertyRef Name="Friend" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FriendsWith_UsersH">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Friends_With" Type="Self.Friends_With" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Friends_With">
+        <PropertyRef Name="Host" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Posts__Author__2B3F6F97">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="Author" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Posts__Userprofi__2A4B4B5E">
+    <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profiles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="Userprofile" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Profil__276EDEB3">
+    <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profiles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Profil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitors_Profiles">
+    <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+    <End Role="Visitors" Type="Self.Visitors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profiles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Visitors">
+        <PropertyRef Name="Host" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitors_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Visitors" Type="Self.Visitors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Visitors">
+        <PropertyRef Name="Visitor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Profiles_Attributes">
+    <End Role="Attributes" Type="Self.Attributes" Multiplicity="*" />
+    <End Role="Profiles" Type="Self.Profiles" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="MyDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Attributes" EntityType="Self.Attributes" />
+    <EntitySet Name="FriendCategory" EntityType="Self.FriendCategory" />
+    <EntitySet Name="Friends_With" EntityType="Self.Friends_With" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" />
+    <EntitySet Name="Profiles" EntityType="Self.Profiles" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Visitors" EntityType="Self.Visitors" />
+    <AssociationSet Name="FK_FriendsWith_FriendCategory" Association="Self.FK_FriendsWith_FriendCategory">
+      <End Role="FriendCategory" EntitySet="FriendCategory" />
+      <End Role="Friends_With" EntitySet="Friends_With" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FriendsWith_UsersF" Association="Self.FK_FriendsWith_UsersF">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Friends_With" EntitySet="Friends_With" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FriendsWith_UsersH" Association="Self.FK_FriendsWith_UsersH">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Friends_With" EntitySet="Friends_With" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Posts__Author__2B3F6F97" Association="Self.FK__Posts__Author__2B3F6F97">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Posts__Userprofi__2A4B4B5E" Association="Self.FK__Posts__Userprofi__2A4B4B5E">
+      <End Role="Profiles" EntitySet="Profiles" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Profil__276EDEB3" Association="Self.FK__Users__Profil__276EDEB3">
+      <End Role="Profiles" EntitySet="Profiles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitors_Profiles" Association="Self.FK_Visitors_Profiles">
+      <End Role="Profiles" EntitySet="Profiles" />
+      <End Role="Visitors" EntitySet="Visitors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitors_Users" Association="Self.FK_Visitors_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Visitors" EntitySet="Visitors" />
+    </AssociationSet>
+    <AssociationSet Name="Profiles_Attributes" Association="Self.Profiles_Attributes">
+      <End Role="Attributes" EntitySet="Attributes" />
+      <End Role="Profiles" EntitySet="Profiles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

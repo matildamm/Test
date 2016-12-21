@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyDatabaseModelStoreContainer" CdmEntityContainer="MyDatabaseEntities">
+    <EntitySetMapping Name="Attributes">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Attributes">
+        <MappingFragment StoreEntitySet="Attributes">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FriendCategory">
+      <EntityTypeMapping TypeName="MyDatabaseModel.FriendCategory">
+        <MappingFragment StoreEntitySet="FriendCategory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Friends_With">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Friends_With">
+        <MappingFragment StoreEntitySet="Friends_With">
+          <ScalarProperty Name="Host" ColumnName="Host" />
+          <ScalarProperty Name="Friend" ColumnName="Friend" />
+          <ScalarProperty Name="FriendCategory" ColumnName="FriendCategory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Posts">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Userprofile" ColumnName="Userprofile" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Profiles">
+        <MappingFragment StoreEntitySet="Profiles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+          <ScalarProperty Name="Ålder" ColumnName="Ålder" />
+          <ScalarProperty Name="Längd" ColumnName="Längd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Visible" ColumnName="Visible" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Profil" ColumnName="Profil" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visitors">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Visitors">
+        <MappingFragment StoreEntitySet="Visitors">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Host" ColumnName="Host" />
+          <ScalarProperty Name="Visitor" ColumnName="Visitor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Profiles_Attributes" TypeName="MyDatabaseModel.Profiles_Attributes" StoreEntitySet="Profiles_Attributes">
+      <EndProperty Name="Attributes">
+        <ScalarProperty Name="ID" ColumnName="Attributes" />
+      </EndProperty>
+      <EndProperty Name="Profiles">
+        <ScalarProperty Name="ID" ColumnName="Profiles" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
